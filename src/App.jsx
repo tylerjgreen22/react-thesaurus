@@ -1,35 +1,18 @@
 import { useState } from "react";
-import getSynonym from "../api/api";
+import SearchForm from "./SearchForm";
+import ResultsDisplay from "./ResultsDisplay";
 
 function App() {
   const [word, setWord] = useState("");
   const [result, setResult] = useState([]);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const res = await getSynonym(word);
-
-    setResult(res.data);
-  }
-
   console.log(result);
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Enter a word"
-          value={word}
-          onChange={(e) => {
-            setWord(e.target.value);
-          }}
-        ></input>
-        <button>Submit</button>
-      </form>
       <div>
-        {result.map((word) => (
-          <p>{word.word}</p>
-        ))}
+        <SearchForm word={word} wordSetter={setWord} resultSetter={setResult} />
+        <ResultsDisplay result={result} />
       </div>
     </>
   );
